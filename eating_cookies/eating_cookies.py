@@ -6,8 +6,15 @@ import sys
 # a solution that is more efficient than the naive
 # recursive solution
 
+cache = {
+    0: 1,
+    1: 1,
+    2: 2,
+    3: 4
+}
 
-def eating_cookies(n, cache=None):
+
+def eating_cookies(n, dump=None):
     ways = 0
     if n <= 1:
         return 1
@@ -16,8 +23,11 @@ def eating_cookies(n, cache=None):
     elif n == 3:
         return 4
     else:
-        ways = eating_cookies(n - 1) + eating_cookies(n -
-                                                      2) + eating_cookies(n - 3)
+        if n not in cache:
+            cache[n] = eating_cookies(n - 1) + \
+                eating_cookies(n - 2) + \
+                eating_cookies(n - 3)
+        ways = cache[n]
     return ways
 
 
